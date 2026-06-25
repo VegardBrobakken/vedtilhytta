@@ -7,19 +7,40 @@ const navLinks = [
   { to: '/priser', label: 'Priser' },
   { to: '/levering', label: 'Levering' },
   { to: '/om-oss', label: 'Om oss' },
-  { to: '/bestill', label: 'Bestill ved' },
+  { to: '/kontakt', label: 'Kontakt' },
 ]
+
+function TreeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
+    </svg>
+  )
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
     <nav className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
-      <div className="mx-auto flex max-w-5xl items-center justify-between p-4">
-        {/* Logo placeholder */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-gray-200 text-[10px] font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
-            LOGO
+          <TreeIcon className="text-forest-700 dark:text-forest-400" />
+          <span className="flex flex-col leading-tight">
+            <span className="text-lg font-bold text-forest-800 dark:text-forest-200">
+              vedtilhytta.no
+            </span>
+            <span className="text-[11px] text-gray-500 dark:text-gray-400">
+              god ved godt hytteliv
+            </span>
           </span>
         </Link>
 
@@ -29,11 +50,17 @@ export function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+              className="text-sm font-medium text-gray-700 uppercase hover:text-forest-700 dark:text-gray-300 dark:hover:text-forest-300"
             >
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/bestill"
+            className="rounded-md bg-forest-700 px-4 py-2 text-sm font-semibold text-white uppercase hover:bg-forest-600"
+          >
+            Bestill ved
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -79,11 +106,17 @@ export function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              className="rounded-md px-2 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="rounded-md px-2 py-2 text-sm font-medium text-gray-700 uppercase hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
             >
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/bestill"
+            className="mt-1 rounded-md bg-forest-700 px-2 py-2 text-center text-sm font-semibold text-white uppercase hover:bg-forest-600"
+          >
+            Bestill ved
+          </Link>
         </div>
       )}
     </nav>

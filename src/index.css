@@ -1,5 +1,19 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-forest-50: #f0f5f1;
+  --color-forest-100: #d9e6dd;
+  --color-forest-200: #b6cdc0;
+  --color-forest-300: #8caf9b;
+  --color-forest-400: #5f8a70;
+  --color-forest-500: #437056;
+  --color-forest-600: #3a6b4a;
+  --color-forest-700: #2f5a3d;
+  --color-forest-800: #244730;
+  --color-forest-900: #1c3a29;
+  --color-forest-950: #122518;
+}
+
 body {
   margin: 0;
 }
