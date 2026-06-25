@@ -19,9 +19,9 @@ function TreeIcon({ className }: { className?: string }) {
 }
 
 const labelClass =
-  "block text-sm font-medium text-gray-700 dark:text-gray-300";
+  "block text-sm font-medium text-gray-700";
 const inputClass =
-  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/30 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100";
+  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/30";
 
 export function Login() {
   const { user, login } = useAuth();
@@ -48,19 +48,19 @@ export function Login() {
   return (
     <div className="flex flex-col items-center py-10">
       <Link to="/" className="mb-6 flex flex-col items-center gap-2">
-        <TreeIcon className="text-forest-700 dark:text-forest-400" />
+        <TreeIcon className="text-forest-700" />
         <span className="flex flex-col items-center leading-tight">
-          <span className="text-lg font-bold text-forest-800 dark:text-forest-200">
+          <span className="text-lg font-bold text-forest-800">
             vedtilhytta.no
           </span>
-          <span className="text-[11px] tracking-wide text-gray-500 uppercase dark:text-gray-400">
+          <span className="text-[11px] tracking-wide text-gray-500 uppercase">
             Administrasjon
           </span>
         </span>
       </Link>
 
-      <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-        <h1 className="mb-6 text-xl font-bold text-forest-800 dark:text-forest-200">
+      <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <h1 className="mb-6 text-xl font-bold text-forest-800">
           Logg inn
         </h1>
 
@@ -92,7 +92,7 @@ export function Login() {
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            <p className="text-sm text-red-600">{error}</p>
           )}
 
           <button
@@ -106,7 +106,7 @@ export function Login() {
 
       <Link
         to="/"
-        className="mt-6 text-sm font-medium text-forest-700 uppercase hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
+        className="mt-6 text-sm font-medium text-forest-700 uppercase hover:text-forest-600"
       >
         Til nettsiden
       </Link>

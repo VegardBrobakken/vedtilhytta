@@ -29,16 +29,16 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+    <nav className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <TreeIcon className="text-forest-700 dark:text-forest-400" />
+          <TreeIcon className="text-forest-700" />
           <span className="flex flex-col leading-tight">
-            <span className="text-lg font-bold text-forest-800 dark:text-forest-200">
+            <span className="text-lg font-bold text-forest-800">
               vedtilhytta.no
             </span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">
+            <span className="text-[11px] text-gray-500">
               god ved godt hytteliv
             </span>
           </span>
@@ -50,7 +50,7 @@ export function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              className="text-sm font-medium text-gray-700 uppercase hover:text-forest-700 dark:text-gray-300 dark:hover:text-forest-300"
+              className="text-sm font-medium text-gray-700 uppercase hover:text-forest-700"
             >
               {link.label}
             </Link>
@@ -69,7 +69,7 @@ export function Navbar() {
           onClick={() => setOpen((v) => !v)}
           aria-label="Meny"
           aria-expanded={open}
-          className="rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden dark:text-gray-300 dark:hover:bg-gray-800"
+          className="rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden"
         >
           <svg
             width="24"
@@ -100,13 +100,13 @@ export function Navbar() {
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="flex flex-col gap-1 border-t border-gray-200 p-4 md:hidden dark:border-gray-800"
+          className="flex flex-col gap-1 border-t border-gray-200 p-4 md:hidden"
         >
           {navLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className="rounded-md px-2 py-2 text-sm font-medium text-gray-700 uppercase hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="rounded-md px-2 py-2 text-sm font-medium text-gray-700 uppercase hover:bg-gray-100"
             >
               {link.label}
             </Link>

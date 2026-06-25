@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { submitOrder } from "../lib/orders";
 
-const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300";
+const labelClass = "block text-sm font-medium text-gray-700";
 const inputClass =
-  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100";
+  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30";
 
 export function Order() {
   const [name, setName] = useState("");
@@ -40,7 +40,7 @@ export function Order() {
     return (
       <div className="space-y-3">
         <h1 className="text-2xl font-bold">Takk for bestillingen!</h1>
-        <p className="text-gray-700 dark:text-gray-300">
+        <p className="text-gray-700">
           Vi har mottatt bestillingen din og tar kontakt så snart som mulig.
         </p>
       </div>
@@ -51,7 +51,7 @@ export function Order() {
     <div className="mx-auto w-full max-w-xl space-y-6 py-8 sm:py-12">
       <div className="space-y-1">
         <h1 className="text-2xl font-bold">Bestill ved</h1>
-        <p className="text-gray-700 dark:text-gray-300">
+        <p className="text-gray-700">
           Fyll ut skjemaet, så tar vi kontakt for å bekrefte bestillingen.
         </p>
       </div>
@@ -145,7 +145,7 @@ export function Order() {
             {busy ? "Sender..." : "Send bestilling"}
           </button>
           {error && (
-            <span className="text-sm text-red-600 dark:text-red-400">
+            <span className="text-sm text-red-600">
               {error}
             </span>
           )}

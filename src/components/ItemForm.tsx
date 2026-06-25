@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { addItem, updateItem, uploadImage } from '../lib/items'
 import type { ItemForSaleDoc } from '../types/ItemForSale'
 
-const labelClass = 'block text-sm font-medium text-gray-700 dark:text-gray-300'
+const labelClass = 'block text-sm font-medium text-gray-700'
 const inputClass =
-  'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/30 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100'
+  'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/30'
 
 export function ItemForm({
   item,
@@ -69,7 +69,7 @@ export function ItemForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-lg font-bold text-forest-800 dark:text-forest-200">
+      <h2 className="text-lg font-bold text-forest-800">
         {editing ? 'Rediger vare' : 'Legg til vare'}
       </h2>
 
@@ -120,14 +120,14 @@ export function ItemForm({
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            className="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-forest-700 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-forest-600 dark:text-gray-400"
+            className="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-forest-700 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-forest-600"
           />
         </label>
         {preview && (
           <img
             src={preview}
             alt="Forhåndsvisning"
-            className="mt-3 aspect-square w-32 rounded-md border border-gray-200 object-cover dark:border-gray-700"
+            className="mt-3 aspect-square w-32 rounded-md border border-gray-200 object-cover"
           />
         )}
       </div>
@@ -144,11 +144,11 @@ export function ItemForm({
           type="button"
           onClick={onDone}
           disabled={busy}
-          className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-800"
+          className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
         >
           Avbryt
         </button>
-        {error && <span className="text-sm text-red-600 dark:text-red-400">{error}</span>}
+        {error && <span className="text-sm text-red-600">{error}</span>}
       </div>
     </form>
   )

@@ -6,7 +6,7 @@ import type { ItemForSaleDoc } from '../types/ItemForSale'
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
     <div
-      className={`grid place-items-center bg-gray-200 text-xs font-medium tracking-wide text-gray-400 uppercase dark:bg-gray-800 dark:text-gray-500 ${className ?? ''}`}
+      className={`grid place-items-center bg-gray-200 text-xs font-medium tracking-wide text-gray-400 uppercase ${className ?? ''}`}
     >
       Bilde
     </div>
@@ -134,12 +134,12 @@ export function Home() {
       </section>
 
       {/* Feature bar */}
-      <section className="bg-forest-50 dark:bg-forest-950/40">
+      <section className="bg-forest-50">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
           {features.map((feature) => (
             <div key={feature.label} className="text-center">
               <svg
-                className="mx-auto mb-3 text-forest-700 dark:text-forest-400"
+                className="mx-auto mb-3 text-forest-700"
                 width="32"
                 height="32"
                 viewBox="0 0 24 24"
@@ -151,10 +151,10 @@ export function Home() {
               >
                 {feature.icon}
               </svg>
-              <h3 className="text-sm font-semibold tracking-wide text-forest-800 uppercase dark:text-forest-200">
+              <h3 className="text-sm font-semibold tracking-wide text-forest-800 uppercase">
                 {feature.label}
               </h3>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-600">
                 {feature.text}
               </p>
             </div>
@@ -165,10 +165,10 @@ export function Home() {
       {/* Kvalitetsved */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2">
         <div>
-          <h2 className="text-3xl font-bold text-forest-800 dark:text-forest-200">
+          <h2 className="text-3xl font-bold text-forest-800">
             Kvalitetsved fra lokale skoger
           </h2>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-gray-600">
             Veden vår kommer fra bærekraftig drevne skoger i nærområdet.
             Bjørkeveden kløyves, tørkes og pakkes i praktiske sekker på pall.
           </p>
@@ -178,9 +178,9 @@ export function Home() {
               'Praktiske paller – enkle å stable',
               'Rent og ryddig levert',
             ].map((item) => (
-              <li key={item} className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+              <li key={item} className="flex items-center gap-3 text-gray-700">
                 <svg
-                  className="shrink-0 text-forest-600 dark:text-forest-400"
+                  className="shrink-0 text-forest-600"
                   width="20"
                   height="20"
                   viewBox="0 0 24 24"
@@ -207,17 +207,17 @@ export function Home() {
       </section>
 
       {/* Products */}
-      <section className="bg-gray-50 dark:bg-gray-950/40">
+      <section className="bg-gray-50">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="text-center text-3xl font-bold text-forest-800 dark:text-forest-200">
+          <h2 className="text-center text-3xl font-bold text-forest-800">
             Våre vedprodukter
           </h2>
           {loading ? (
-            <p className="mt-10 text-center text-gray-500 dark:text-gray-400">
+            <p className="mt-10 text-center text-gray-500">
               Laster produkter …
             </p>
           ) : products.length === 0 ? (
-            <p className="mt-10 text-center text-gray-500 dark:text-gray-400">
+            <p className="mt-10 text-center text-gray-500">
               Ingen produkter tilgjengelig akkurat nå.
             </p>
           ) : (
@@ -225,7 +225,7 @@ export function Home() {
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
+                  className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
                 >
                   {product.imageUrl ? (
                     <img
@@ -237,14 +237,14 @@ export function Home() {
                     <ImagePlaceholder className="aspect-[4/3] w-full" />
                   )}
                   <div className="p-5">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       {product.name}
                     </h3>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="mt-1 text-sm text-gray-600">
                       {product.description}
                     </p>
                     <div className="mt-4 flex items-center justify-between">
-                      <span className="text-xl font-bold text-forest-800 dark:text-forest-200">
+                      <span className="text-xl font-bold text-forest-800">
                         {formatPrice(product.price)}
                       </span>
                       <Link
