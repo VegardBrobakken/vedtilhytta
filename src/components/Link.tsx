@@ -9,10 +9,10 @@ export function Link({
   children: React.ReactNode
   className?: string
 }) {
-  const { navigate } = useRouter()
+  const { navigate, href } = useRouter()
   return (
     <a
-      href={to}
+      href={href(to)}
       className={className}
       onClick={(e) => {
         e.preventDefault()

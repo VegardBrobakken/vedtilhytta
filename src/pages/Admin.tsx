@@ -1,40 +1,60 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from '../auth/AuthContext'
-import { Link } from '../components/Link'
-import { ItemForm } from '../components/ItemForm'
-import { Modal } from '../components/Modal'
-import { deleteItem, subscribeItems } from '../lib/items'
-import type { ItemForSaleDoc } from '../types/ItemForSale'
+import { useEffect, useState } from "react";
+import { useAuth } from "../auth/AuthContext";
+import { Link } from "../components/Link";
+import { ItemForm } from "../components/ItemForm";
+import { Modal } from "../components/Modal";
+import { deleteItem, subscribeItems } from "../lib/items";
+import type { ItemForSaleDoc } from "../types/ItemForSale";
+
+function TreeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
+    </svg>
+  );
+}
 
 export function Admin() {
-  const { user, logout } = useAuth()
-  const [items, setItems] = useState<ItemForSaleDoc[]>([])
+  const { user, logout } = useAuth();
+  const [items, setItems] = useState<ItemForSaleDoc[]>([]);
   // null = modal closed, 'new' = add form, an item = edit form.
-  const [form, setForm] = useState<ItemForSaleDoc | 'new' | null>(null)
+  const [form, setForm] = useState<ItemForSaleDoc | "new" | null>(null);
 
-  useEffect(() => subscribeItems(setItems), [])
+  useEffect(() => subscribeItems(setItems), []);
 
   const onDelete = async (item: ItemForSaleDoc) => {
     if (confirm(`Slette «${item.name}»?`)) {
-      await deleteItem(item)
+      await deleteItem(item);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-      <div className="mx-auto max-w-5xl p-4 sm:p-6">
-        <header className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-2xl font-bold">Admin</h1>
+      {/* Brand bar – echoes the public navbar so it reads as the same site */}
+      <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <Link to="/" className="flex items-center gap-2">
+            <TreeIcon className="text-forest-700 dark:text-forest-400" />
+            <span className="flex flex-col leading-tight">
+              <span className="text-lg font-bold text-forest-800 dark:text-forest-200">
+                vedtilhytta.no
+              </span>
+              <span className="text-[11px] tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                Administrasjon
+              </span>
+            </span>
+          </Link>
           <div className="flex flex-wrap items-center gap-3 text-sm">
             <span className="min-w-0 truncate text-gray-500 dark:text-gray-400">
-              {user?.email}
+              Innlogget bruker: {user?.email}
             </span>
-            <Link
-              to="/"
-              className="text-blue-600 hover:underline dark:text-blue-400"
-            >
-              Hjem
-            </Link>
             <button
               type="button"
               onClick={() => logout()}
@@ -43,19 +63,21 @@ export function Admin() {
               Logg ut
             </button>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="text-lg font-semibold">
-            Varer{' '}
-            <span className="text-gray-400 dark:text-gray-500">
+      <div className="mx-auto max-w-5xl p-4 sm:p-6">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold text-forest-800 dark:text-forest-200">
+            Varer{" "}
+            <span className="font-semibold text-gray-400 dark:text-gray-500">
               ({items.length})
             </span>
-          </h2>
+          </h1>
           <button
             type="button"
-            onClick={() => setForm('new')}
-            className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+            onClick={() => setForm("new")}
+            className="rounded-md bg-forest-700 px-4 py-2 text-sm font-semibold tracking-wide text-white uppercase hover:bg-forest-600"
           >
             Ny vare +
           </button>
@@ -68,7 +90,7 @@ export function Admin() {
             {items.map((item) => (
               <article
                 key={item.id}
-                className="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
+                className="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
               >
                 <img
                   src={item.imageUrl}
@@ -76,8 +98,10 @@ export function Admin() {
                   className="aspect-square w-full object-cover"
                 />
                 <div className="flex flex-1 flex-col p-4">
-                  <h3 className="font-semibold">{item.name}</h3>
-                  <p className="mb-1 font-medium text-blue-600 dark:text-blue-400">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    {item.name}
+                  </h3>
+                  <p className="mb-1 font-bold text-forest-800 dark:text-forest-200">
                     {item.price} kr
                   </p>
                   <p className="mb-4 flex-1 text-sm text-gray-600 dark:text-gray-400">
@@ -109,11 +133,11 @@ export function Admin() {
       {form && (
         <Modal onClose={() => setForm(null)}>
           <ItemForm
-            item={form === 'new' ? undefined : form}
+            item={form === "new" ? undefined : form}
             onDone={() => setForm(null)}
           />
         </Modal>
       )}
     </div>
-  )
+  );
 }

@@ -4,5 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Served from https://vegardbrobakken.github.io/vedtilhytta/ on GitHub Pages.
+  base: '/vedtilhytta/',
   plugins: [react(), tailwindcss()],
 })

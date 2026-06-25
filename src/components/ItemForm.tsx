@@ -4,7 +4,7 @@ import type { ItemForSaleDoc } from '../types/ItemForSale'
 
 const labelClass = 'block text-sm font-medium text-gray-700 dark:text-gray-300'
 const inputClass =
-  'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100'
+  'mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/30 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100'
 
 export function ItemForm({
   item,
@@ -69,7 +69,7 @@ export function ItemForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h2 className="text-lg font-semibold">
+      <h2 className="text-lg font-bold text-forest-800 dark:text-forest-200">
         {editing ? 'Rediger vare' : 'Legg til vare'}
       </h2>
 
@@ -120,7 +120,7 @@ export function ItemForm({
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            className="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700 dark:text-gray-400"
+            className="mt-1 block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-forest-700 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-forest-600 dark:text-gray-400"
           />
         </label>
         {preview && (
@@ -136,7 +136,7 @@ export function ItemForm({
         <button
           type="submit"
           disabled={busy}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="rounded-md bg-forest-700 px-4 py-2 text-sm font-semibold tracking-wide text-white uppercase hover:bg-forest-600 disabled:opacity-50"
         >
           {busy ? 'Lagrer...' : editing ? 'Lagre' : 'Legg til'}
         </button>
