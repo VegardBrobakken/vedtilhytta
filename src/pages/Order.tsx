@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { submitOrder } from "../lib/orders";
+import { logOrder, submitOrder } from "../lib/orders";
 
 const labelClass = "block text-sm font-medium text-gray-700";
 const inputClass =
@@ -26,7 +26,11 @@ export function Order() {
     setError("");
     setBusy(true);
     try {
-      await submitOrder({ name, email, phone, address, products });
+      const details = { name, email, phone, address, products };
+      // Email is the real order channel; the Firestore log gives the owner an
+      // overview in the admin panel. Both must succeed.
+      await submitOrder(details);
+      await logOrder(details);
       setSent(true);
     } catch (err) {
       console.error("Failed to submit order:", err);
