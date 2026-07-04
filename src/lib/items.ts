@@ -38,8 +38,7 @@ export async function updateItem(id: string, item: ItemForSale) {
 }
 
 export async function deleteItem(item: ItemForSaleDoc) {
-  await deleteDoc(doc(db, COLLECTION, item.id))
-  // Best-effort cleanup of the image; ignore if it's already gone.
+  // Best-effort cleanup of the image first; ignore if it's already gone.
   if (item.imageUrl) {
     try {
       await deleteObject(ref(storage, item.imageUrl))
@@ -47,6 +46,7 @@ export async function deleteItem(item: ItemForSaleDoc) {
       /* image missing or not a Storage URL */
     }
   }
+  await deleteDoc(doc(db, COLLECTION, item.id))
 }
 
 /** Upload an image file to Storage and return its public download URL. */
