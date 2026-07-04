@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react'
-import { Link } from '../components/Link'
-import { subscribeItems } from '../lib/items'
-import type { ItemForSaleDoc } from '../types/ItemForSale'
+import { useEffect, useState } from "react";
+import { Link } from "../components/Link";
+import { subscribeItems } from "../lib/items";
+import type { ItemForSaleDoc } from "../types/ItemForSale";
 
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
     <div
-      className={`grid place-items-center bg-gray-200 text-xs font-medium tracking-wide text-gray-400 uppercase ${className ?? ''}`}
+      className={`grid place-items-center bg-gray-200 text-xs font-medium tracking-wide text-gray-400 uppercase ${className ?? ""}`}
     >
       Bilde
     </div>
-  )
+  );
 }
 
 const features = [
   {
-    label: 'Tørr ved og klar til bruk',
-    text: 'Tørr bjørkeved av høy kvalitet. Klevd og klar til bruk.',
+    label: "Tørr ved klar til bruk",
+    text: "Tørr bjørkeved av høy kvalitet. Klevd og klar til bruk.",
     // Pile of 3 stacked logs, angled
     icon: (
       <g transform="rotate(-30 12 12)">
@@ -39,8 +39,8 @@ const features = [
     ),
   },
   {
-    label: 'Levering til hytta',
-    text: 'Vi leverer til Hafjell, Sjusjøen, Skeikampen og omegn.',
+    label: "Levering til hytta",
+    text: "Vi leverer til Hafjell, Sjusjøen, Skeikampen og omegn.",
     // Delivery truck
     icon: (
       <>
@@ -53,8 +53,8 @@ const features = [
     ),
   },
   {
-    label: 'Enkel bestilling',
-    text: 'Bestill ved på nett på få minutter. Vi ordner resten.',
+    label: "Enkel bestilling",
+    text: "Bestill ved på nett på få minutter. Vi ordner resten.",
     // Receipt
     icon: (
       <>
@@ -65,8 +65,8 @@ const features = [
     ),
   },
   {
-    label: 'Bærekraftig',
-    text: 'Kortreist ved fra bærekraftig lokalt skogbruk.',
+    label: "Bærekraftig",
+    text: "Kortreist ved fra bærekraftig lokalt skogbruk.",
     // Leaf
     icon: (
       <>
@@ -75,25 +75,25 @@ const features = [
       </>
     ),
   },
-]
+];
 
 /** Format a NOK price like 1490 as "1 490,-". */
 function formatPrice(price: number) {
-  return `${price.toLocaleString('nb-NO')},-`
+  return `${price.toLocaleString("nb-NO")},-`;
 }
 
 export function Home() {
-  const [products, setProducts] = useState<ItemForSaleDoc[]>([])
-  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState<ItemForSaleDoc[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(
     () =>
       subscribeItems((items) => {
-        setProducts(items)
-        setLoading(false)
+        setProducts(items);
+        setLoading(false);
       }),
     [],
-  )
+  );
 
   return (
     <>
@@ -107,13 +107,14 @@ export function Home() {
               Ved til hytta – enkelt og trygt
             </h1>
             <p className="mt-4 text-lg text-forest-100">
-              Tørr ved og klar til bruk
+              Tørr ved klar til bruk
             </p>
             <p className="mt-2 text-forest-100">
               Kortreist ved fra bærekraftig lokalt skogbruk.
             </p>
             <p className="mt-4 text-forest-100">
-              Vi leverer til Hafjell, Sjusjøen, Synnfjellet, Skeikampen og omegn.
+              Vi leverer til Hafjell, Sjusjøen, Synnfjellet, Skeikampen og
+              omegn.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
@@ -154,9 +155,7 @@ export function Home() {
               <h3 className="text-sm font-semibold tracking-wide text-forest-800 uppercase">
                 {feature.label}
               </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                {feature.text}
-              </p>
+              <p className="mt-1 text-sm text-gray-600">{feature.text}</p>
             </div>
           ))}
         </div>
@@ -174,9 +173,9 @@ export function Home() {
           </p>
           <ul className="mt-6 space-y-3">
             {[
-              'Tørr ved og klar til bruk',
-              'Praktiske paller – enkle å stable',
-              'Rent og ryddig levert',
+              "Tørr ved klar til bruk",
+              "Praktiske paller – enkle å stable",
+              "Rent og ryddig levert",
             ].map((item) => (
               <li key={item} className="flex items-center gap-3 text-gray-700">
                 <svg
@@ -262,5 +261,5 @@ export function Home() {
         </div>
       </section>
     </>
-  )
+  );
 }
