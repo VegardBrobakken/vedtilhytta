@@ -25,12 +25,35 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install lftp and sshpass
+        run: sudo apt-get update && sudo apt-get install -y lftp sshpass
+
       - name: Deploy via SFTP
-        uses: Dylan700/sftp-upload-action@latest
-        with:
-          server: ${{ secrets.SFTP_HOST }}
-          port: ${{ secrets.SFTP_PORT }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          uploads: |
-            ./dist/ => ${{ secrets.SFTP_REMOTE_PATH }}
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          SSHPASS: ${{ secrets.SFTP_PASSWORD }}
+          SFTP_REMOTE_PATH: ${{ secrets.SFTP_REMOTE_PATH }}
+        run: |
+          set -e
+          echo "Local dist contents:"
+          ls -la dist/
+
+          lftp -c "
+            set sftp:auto-confirm yes;
+            set sftp:connect-program 'sshpass -e ssh -a -x -o StrictHostKeyChecking=no';
+            open -u '$SFTP_USERNAME',dummy sftp://$SFTP_HOST:$SFTP_PORT;
+            echo '--- Home directory after login:';
+            pwd;
+            echo '--- Changing into target path:';
+            cd '$SFTP_REMOTE_PATH';
+            pwd;
+            echo '--- Remote listing BEFORE upload:';
+            cls -la;
+            echo '--- Mirroring dist/ -> remote (uploading):';
+            mirror -R --verbose --no-perms ./dist/ ./;
+            echo '--- Remote listing AFTER upload:';
+            cls -la;
+          "
+
