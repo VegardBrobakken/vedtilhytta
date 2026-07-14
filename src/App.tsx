@@ -11,6 +11,7 @@ import { Kontakt } from './pages/Kontakt'
 import { Order } from './pages/Order'
 import { Admin } from './pages/Admin'
 import { Login } from './pages/Login'
+import { NotFound } from './pages/NotFound'
 
 const publicPages: Record<string, React.ComponentType> = {
   '/': Home,
@@ -41,7 +42,15 @@ function App() {
     )
   }
 
-  const Page = publicPages[path] ?? Home
+  const Page = publicPages[path]
+  if (!Page) {
+    return (
+      <PublicLayout>
+        <NotFound />
+      </PublicLayout>
+    )
+  }
+
   return (
     <PublicLayout contained={path !== '/'}>
       <Page />
