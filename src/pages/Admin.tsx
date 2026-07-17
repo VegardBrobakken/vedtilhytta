@@ -92,6 +92,9 @@ function OrderCard({
         </svg>
         <span className="min-w-0 flex-1">
           <span className="block truncate font-semibold text-gray-900">
+            {order.orderNumber != null && (
+              <span className="text-gray-500">#{order.orderNumber} </span>
+            )}
             {order.name}
           </span>
           {created && (

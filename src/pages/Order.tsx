@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { logOrder, submitOrder } from "../lib/orders";
+import { createOrder, submitOrder } from "../lib/orders";
 
 const labelClass = "block text-sm font-medium text-gray-700";
 const inputClass =
@@ -16,6 +16,7 @@ export function Order() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [orderNumber, setOrderNumber] = useState<number | null>(null);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +35,12 @@ export function Order() {
         address: wantsDelivery ? address : "",
         products,
       };
-      // Email is the real order channel; the Firestore log gives the owner an
-      // overview in the admin panel. Both must succeed.
-      await submitOrder(details);
-      await logOrder(details);
+      // Reserve the order number and store the order first, then email it. The
+      // Firestore log gives the owner an overview in the admin panel; the email
+      // is the real order channel. Both must succeed.
+      const number = await createOrder(details);
+      await submitOrder(details, number);
+      setOrderNumber(number);
       setSent(true);
     } catch (err) {
       console.error("Failed to submit order:", err);
@@ -49,8 +52,13 @@ export function Order() {
 
   if (sent) {
     return (
-      <div className="space-y-3">
+      <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-3 text-center">
         <h1 className="text-2xl font-bold">Takk for bestillingen!</h1>
+        {orderNumber !== null && (
+          <p className="text-lg font-semibold text-forest-700">
+            Bestillingsnummer: #{orderNumber}
+          </p>
+        )}
         <p className="text-gray-700">
           Vi har mottatt bestillingen din og tar kontakt så snart som mulig.
         </p>

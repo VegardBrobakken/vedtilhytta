@@ -1,5 +1,4 @@
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -8,6 +7,7 @@ import {
   limit,
   orderBy,
   query,
+  runTransaction,
   serverTimestamp,
   startAfter,
   updateDoc,
@@ -33,12 +33,20 @@ export type OrderStatus = 'new' | 'handled'
 /** An order as stored in Firestore, together with its document id. */
 export interface OrderDoc extends OrderDetails {
   id: string
+  /** Human-friendly, sequential order number shown to the customer. */
+  orderNumber: number
   status: OrderStatus
   /** null for the brief moment before the server timestamp resolves locally. */
   createdAt: Timestamp | null
 }
 
 const COLLECTION = 'orders'
+
+/** Document holding the running order-number counter (a single shared doc). */
+const COUNTER_DOC = doc(db, 'counters', 'orders')
+
+/** The first order gets this number; each subsequent order is one higher. */
+const FIRST_ORDER_NUMBER = 1000
 
 /** How many orders to load per page in the admin panel. */
 export const ORDERS_PAGE_SIZE = 20
@@ -62,7 +70,7 @@ const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as
  * Submit an order by sending it through Web3Forms, which emails it to the
  * address the access key was registered with. No backend or SMTP required.
  */
-export async function submitOrder(order: OrderDetails) {
+export async function submitOrder(order: OrderDetails, orderNumber: number) {
   if (!ACCESS_KEY) {
     throw new Error('VITE_WEB3FORMS_ACCESS_KEY is not configured')
   }
@@ -75,9 +83,10 @@ export async function submitOrder(order: OrderDetails) {
     },
     body: JSON.stringify({
       access_key: ACCESS_KEY,
-      subject: `Ny bestilling fra ${order.name}`,
+      subject: `Ny bestilling #${orderNumber} fra ${order.name}`,
       from_name: 'Ved til hytta',
       replyto: order.email,
+      Bestillingsnummer: `#${orderNumber}`,
       Navn: order.name,
       'E-post': order.email,
       Telefon: order.phone,
@@ -92,12 +101,29 @@ export async function submitOrder(order: OrderDetails) {
   }
 }
 
-/** Persist an order to Firestore so it shows up in the admin panel. */
-export async function logOrder(order: OrderDetails) {
-  await addDoc(collection(db, COLLECTION), {
-    ...order,
-    status: 'new',
-    createdAt: serverTimestamp(),
+/**
+ * Persist an order to Firestore so it shows up in the admin panel, assigning it
+ * the next sequential order number. Runs in a transaction so concurrent orders
+ * can never receive the same number: the shared counter is read and incremented
+ * atomically alongside creating the order document. Returns the order number so
+ * the caller can show it to the customer.
+ */
+export async function createOrder(order: OrderDetails): Promise<number> {
+  return runTransaction(db, async (tx) => {
+    const counter = await tx.get(COUNTER_DOC)
+    const orderNumber = counter.exists()
+      ? (counter.data().value as number) + 1
+      : FIRST_ORDER_NUMBER
+    tx.set(COUNTER_DOC, { value: orderNumber })
+
+    const orderRef = doc(collection(db, COLLECTION))
+    tx.set(orderRef, {
+      ...order,
+      orderNumber,
+      status: 'new',
+      createdAt: serverTimestamp(),
+    })
+    return orderNumber
   })
 }
 
