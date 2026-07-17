@@ -1,14 +1,13 @@
-import { useState } from 'react'
-import { Link } from './Link'
+import { useState } from "react";
+import { Link } from "./Link";
 
 const navLinks = [
-  { to: '/', label: 'Hjem' },
-  { to: '/veden-var', label: 'Veden vår' },
-  { to: '/priser', label: 'Priser' },
-  { to: '/levering', label: 'Levering' },
-  { to: '/om-oss', label: 'Om oss' },
-  { to: '/kontakt', label: 'Kontakt' },
-]
+  { to: "/", label: "Hjem" },
+  { to: "/veden-var", label: "Veden vår" },
+  { to: "/priser", label: "Priser" },
+  { to: "/levering", label: "Levering" },
+  { to: "/om-oss", label: "Om oss" },
+];
 
 function TreeIcon({ className }: { className?: string }) {
   return (
@@ -22,11 +21,11 @@ function TreeIcon({ className }: { className?: string }) {
     >
       <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
     </svg>
-  )
+  );
 }
 
 export function Navbar() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <nav className="border-b border-gray-200 bg-white">
@@ -120,5 +119,5 @@ export function Navbar() {
         </div>
       )}
     </nav>
-  )
+  );
 }

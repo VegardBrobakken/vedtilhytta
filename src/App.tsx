@@ -1,61 +1,59 @@
-import './App.css'
-import { useRouter } from './router/RouterContext'
-import { ProtectedRoute } from './components/ProtectedRoute'
-import { PublicLayout } from './components/PublicLayout'
-import { Home } from './pages/Home'
-import { Products } from './pages/Products'
-import { Prices } from './pages/Prices'
-import { Delivery } from './pages/Delivery'
-import { About } from './pages/About'
-import { Kontakt } from './pages/Kontakt'
-import { Order } from './pages/Order'
-import { Admin } from './pages/Admin'
-import { Login } from './pages/Login'
-import { NotFound } from './pages/NotFound'
+import "./App.css";
+import { useRouter } from "./router/RouterContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { PublicLayout } from "./components/PublicLayout";
+import { Home } from "./pages/Home";
+import { Products } from "./pages/Products";
+import { Prices } from "./pages/Prices";
+import { Delivery } from "./pages/Delivery";
+import { About } from "./pages/About";
+import { Order } from "./pages/Order";
+import { Admin } from "./pages/Admin";
+import { Login } from "./pages/Login";
+import { NotFound } from "./pages/NotFound";
 
 const publicPages: Record<string, React.ComponentType> = {
-  '/': Home,
-  '/veden-var': Products,
-  '/priser': Prices,
-  '/levering': Delivery,
-  '/om-oss': About,
-  '/kontakt': Kontakt,
-  '/bestill': Order,
-}
+  "/": Home,
+  "/veden-var": Products,
+  "/priser": Prices,
+  "/levering": Delivery,
+  "/om-oss": About,
+  "/bestill": Order,
+};
 
 function App() {
-  const { path } = useRouter()
+  const { path } = useRouter();
 
-  if (path === '/admin') {
+  if (path === "/admin") {
     return (
       <ProtectedRoute>
         <Admin />
       </ProtectedRoute>
-    )
+    );
   }
 
-  if (path === '/login') {
+  if (path === "/login") {
     return (
       <PublicLayout>
         <Login />
       </PublicLayout>
-    )
+    );
   }
 
-  const Page = publicPages[path]
+  const Page = publicPages[path];
   if (!Page) {
     return (
       <PublicLayout>
         <NotFound />
       </PublicLayout>
-    )
+    );
   }
 
   return (
-    <PublicLayout contained={path !== '/'}>
+    <PublicLayout contained={path !== "/"}>
       <Page />
     </PublicLayout>
-  )
+  );
 }
 
-export default App
+export default App;
