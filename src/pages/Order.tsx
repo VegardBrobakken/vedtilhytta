@@ -9,6 +9,7 @@ export function Order() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [wantsDelivery, setWantsDelivery] = useState(false);
   const [address, setAddress] = useState("");
   const [products, setProducts] = useState("");
   const [honeypot, setHoneypot] = useState("");
@@ -26,7 +27,13 @@ export function Order() {
     setError("");
     setBusy(true);
     try {
-      const details = { name, email, phone, address, products };
+      const details = {
+        name,
+        email,
+        phone,
+        address: wantsDelivery ? address : "",
+        products,
+      };
       // Email is the real order channel; the Firestore log gives the owner an
       // overview in the admin panel. Both must succeed.
       await submitOrder(details);
@@ -103,16 +110,31 @@ export function Order() {
         </div>
 
         <div>
-          <label className={labelClass}>
-            Leveringsadresse
-            <textarea
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              autoComplete="street-address"
-              className={inputClass}
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <input
+              type="checkbox"
+              checked={wantsDelivery}
+              onChange={(e) => setWantsDelivery(e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300 text-forest-700 focus:ring-2 focus:ring-forest-500/30"
             />
+            Jeg ønsker veden levert
           </label>
         </div>
+
+        {wantsDelivery && (
+          <div>
+            <label className={labelClass}>
+              Leveringsadresse<span className="text-red-600">*</span>
+              <textarea
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+                autoComplete="street-address"
+                className={inputClass}
+              />
+            </label>
+          </div>
+        )}
 
         <div>
           <label className={labelClass}>
@@ -148,11 +170,7 @@ export function Order() {
           >
             {busy ? "Sender..." : "Send bestilling"}
           </button>
-          {error && (
-            <span className="text-sm text-red-600">
-              {error}
-            </span>
-          )}
+          {error && <span className="text-sm text-red-600">{error}</span>}
         </div>
       </form>
     </div>
