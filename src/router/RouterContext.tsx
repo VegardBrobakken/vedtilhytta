@@ -39,6 +39,9 @@ export function RouterProvider({ children }: { children: React.ReactNode }) {
     if (toHref(to) === window.location.pathname) return
     window.history.pushState(null, '', toHref(to))
     setPath(to)
+    // A new page always starts at the top. Back/forward is left alone so the
+    // browser can restore the scroll position of the entry we return to.
+    window.scrollTo(0, 0)
   }
 
   return (
