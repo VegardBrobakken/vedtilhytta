@@ -7,16 +7,14 @@ function ImagePlaceholder({ className }: { className?: string }) {
   return (
     <div
       className={`grid place-items-center bg-gray-200 text-xs font-medium tracking-wide text-gray-400 uppercase ${className ?? ""}`}
-    >
-      Bilde
-    </div>
+    ></div>
   );
 }
 
 const features = [
   {
     label: "Tørr ved klar til bruk",
-    text: "Tørr bjørkeved av høy kvalitet. Klevd og klar til bruk.",
+    text: "Tørr bjørkeved av høy kvalitet, klar til bruk.",
     // Pile of 3 stacked logs, angled
     icon: (
       <g transform="rotate(-30 12 12)">
@@ -107,7 +105,7 @@ export function Home() {
               Ved til hytta – enkelt og trygt
             </h1>
             <p className="mt-4 text-lg text-forest-100">
-              Tørr ved klar til bruk
+              Tørr ved, klar til bruk
             </p>
             <p className="mt-2 text-forest-100">
               Kortreist ved fra bærekraftig lokalt skogbruk.
@@ -169,14 +167,10 @@ export function Home() {
           </h2>
           <p className="mt-4 text-gray-600">
             Veden vår kommer fra bærekraftig drevne skoger i nærområdet.
-            Bjørkeveden kløyves, tørkes og pakkes i praktiske sekker på pall.
+            Bjørkeveden kløyves, tørkes og pakkes på vårt anlegg på Gjøvik.
           </p>
           <ul className="mt-6 space-y-3">
-            {[
-              "Tørr ved klar til bruk",
-              "Praktiske paller – enkle å stable",
-              "Rent og ryddig levert",
-            ].map((item) => (
+            {["Tørr ved klar til bruk", "Rent og ryddig levert"].map((item) => (
               <li key={item} className="flex items-center gap-3 text-gray-700">
                 <svg
                   className="shrink-0 text-forest-600"
@@ -202,7 +196,11 @@ export function Home() {
             Les mer om veden vår
           </Link>
         </div>
-        <ImagePlaceholder className="aspect-[4/3] w-full rounded-lg" />
+        <img
+          src="/img/IMG_5256.jpeg"
+          alt="Kvalitetsved fra lokale skoger"
+          className="aspect-[4/3] w-full rounded-lg object-cover"
+        />
       </section>
 
       {/* Products */}

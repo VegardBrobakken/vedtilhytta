@@ -6,7 +6,6 @@ const navLinks = [
   { to: "/veden-var", label: "Veden vår" },
   { to: "/priser", label: "Priser" },
   { to: "/levering", label: "Levering" },
-  { to: "/om-oss", label: "Om oss" },
 ];
 
 function TreeIcon({ className }: { className?: string }) {

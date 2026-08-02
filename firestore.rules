@@ -7,6 +7,12 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
+    // Price sections: anyone can read; only signed-in users can write.
+    match /priceSections/{section} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
     // Orders: anyone may create one from the public order form (guarded by
     // field validation), but only signed-in admins can read, update or delete.
     match /orders/{order} {

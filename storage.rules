@@ -6,5 +6,11 @@ service firebase.storage {
       allow read: if true;
       allow write: if request.auth != null;
     }
+
+    // Price-section images: anyone can read; only signed-in users can upload/delete.
+    match /priceSections/{file} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
   }
 }

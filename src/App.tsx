@@ -6,7 +6,6 @@ import { Home } from "./pages/Home";
 import { Products } from "./pages/Products";
 import { Prices } from "./pages/Prices";
 import { Delivery } from "./pages/Delivery";
-import { About } from "./pages/About";
 import { Order } from "./pages/Order";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/Login";
@@ -17,7 +16,6 @@ const publicPages: Record<string, React.ComponentType> = {
   "/veden-var": Products,
   "/priser": Prices,
   "/levering": Delivery,
-  "/om-oss": About,
   "/bestill": Order,
 };
 

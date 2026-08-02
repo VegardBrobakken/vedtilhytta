@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { Link } from "../components/Link";
 import { ItemForm } from "../components/ItemForm";
+import { PriceSectionForm } from "../components/PriceSectionForm";
 import { Modal } from "../components/Modal";
 import { deleteItem, subscribeItems } from "../lib/items";
+import {
+  deletePriceSection,
+  subscribePriceSections,
+} from "../lib/priceSections";
 import {
   countNewOrders,
   countOrders,
@@ -14,6 +19,7 @@ import {
   type OrderDoc,
 } from "../lib/orders";
 import type { ItemForSaleDoc } from "../types/ItemForSale";
+import type { PriceSectionDoc } from "../types/PriceSection";
 
 function TreeIcon({ className }: { className?: string }) {
   return (
@@ -172,9 +178,15 @@ function OrderCard({
 export function Admin() {
   const { user, logout } = useAuth();
   const [items, setItems] = useState<ItemForSaleDoc[]>([]);
-  const [tab, setTab] = useState<"items" | "orders">("items");
+  const [tab, setTab] = useState<"items" | "prices" | "orders">("items");
   // null = modal closed, 'new' = add form, an item = edit form.
   const [form, setForm] = useState<ItemForSaleDoc | "new" | null>(null);
+
+  const [priceSections, setPriceSections] = useState<PriceSectionDoc[]>([]);
+  // null = modal closed, 'new' = add form, a section = edit form.
+  const [priceForm, setPriceForm] = useState<PriceSectionDoc | "new" | null>(
+    null,
+  );
 
   // Orders are paginated so the list stays bounded as the log grows.
   const [orders, setOrders] = useState<OrderDoc[]>([]);
@@ -187,6 +199,7 @@ export function Admin() {
   const [newOrders, setNewOrders] = useState(0);
 
   useEffect(() => subscribeItems(setItems), []);
+  useEffect(() => subscribePriceSections(setPriceSections), []);
 
   useEffect(() => {
     // loadingOrders starts true, so the initial fetch shows the loading state.
@@ -244,6 +257,12 @@ export function Admin() {
     }
   };
 
+  const onDeletePriceSection = async (section: PriceSectionDoc) => {
+    if (confirm(`Slette prisseksjonen «${section.title}»?`)) {
+      await deletePriceSection(section);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Brand bar – echoes the public navbar so it reads as the same site */}
@@ -279,7 +298,10 @@ export function Admin() {
         {/* Tabs – switch between the product catalogue and the order log */}
         <div className="mb-6 flex gap-2 border-b border-gray-200">
           <TabButton active={tab === "items"} onClick={() => setTab("items")}>
-            Varer ({items.length})
+            Varer
+          </TabButton>
+          <TabButton active={tab === "prices"} onClick={() => setTab("prices")}>
+            Priser
           </TabButton>
           <TabButton active={tab === "orders"} onClick={() => setTab("orders")}>
             Bestillinger ({totalOrders ?? orders.length})
@@ -357,6 +379,82 @@ export function Admin() {
           </>
         )}
 
+        {tab === "prices" && (
+          <>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+              <h1 className="text-2xl font-bold text-forest-800">
+                Prisseksjoner{" "}
+                <span className="font-semibold text-gray-400">
+                  ({priceSections.length})
+                </span>
+              </h1>
+              <button
+                type="button"
+                onClick={() => setPriceForm("new")}
+                className="rounded-md bg-forest-700 px-4 py-2 text-sm font-semibold tracking-wide text-white uppercase hover:bg-forest-600"
+              >
+                Opprett ny +
+              </button>
+            </div>
+
+            {priceSections.length === 0 ? (
+              <p className="text-gray-500">Ingen prisseksjoner ennå.</p>
+            ) : (
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-4 sm:gap-5">
+                {priceSections.map((section) => (
+                  <article
+                    key={section.id}
+                    className="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
+                  >
+                    <div className="grid grid-cols-2 gap-0.5">
+                      {section.images.map((image, i) => (
+                        <img
+                          key={`${section.id}-${i}`}
+                          src={image.src}
+                          alt={image.alt}
+                          className="aspect-square w-full object-cover"
+                        />
+                      ))}
+                    </div>
+                    <div className="flex flex-1 flex-col p-4">
+                      <h3 className="font-semibold text-gray-900">
+                        {section.title}
+                      </h3>
+                      {section.description && (
+                        <p className="mt-1 line-clamp-3 text-sm whitespace-pre-line text-gray-500">
+                          {section.description}
+                        </p>
+                      )}
+                      <p className="mt-2 mb-4 flex-1 font-bold text-forest-800">
+                        {section.price} kr{" "}
+                        <span className="text-sm font-normal text-gray-500">
+                          {section.unit}
+                        </span>
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setPriceForm(section)}
+                          className="flex-1 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium hover:bg-gray-100"
+                        >
+                          Rediger
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onDeletePriceSection(section)}
+                          className="flex-1 rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
+                        >
+                          Slett
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {tab === "orders" &&
           (orders.length === 0 ? (
             <p className="text-gray-500">
@@ -393,6 +491,15 @@ export function Admin() {
           <ItemForm
             item={form === "new" ? undefined : form}
             onDone={() => setForm(null)}
+          />
+        </Modal>
+      )}
+
+      {priceForm && (
+        <Modal onClose={() => setPriceForm(null)}>
+          <PriceSectionForm
+            section={priceForm === "new" ? undefined : priceForm}
+            onDone={() => setPriceForm(null)}
           />
         </Modal>
       )}

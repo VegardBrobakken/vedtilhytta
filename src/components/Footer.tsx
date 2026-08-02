@@ -59,7 +59,7 @@ function FacebookIcon() {
 export function Footer() {
   return (
     <footer className="bg-forest-900 text-forest-100">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-4">
+      <div className="mx-auto grid max-w-4xl gap-12 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold tracking-wide text-white uppercase">
             <PinIcon /> Leveringsområder
@@ -75,13 +75,13 @@ export function Footer() {
           </h3>
           <ul className="space-y-2 text-sm text-forest-200">
             <li className="flex items-center gap-2">
-              <PhoneIcon /> +47 123 45 678
+              <PhoneIcon /> +47 949 76 409
             </li>
             <li className="flex items-center gap-2">
               <MailIcon /> post@vedtilhytta.no
             </li>
             <li className="flex items-center gap-2">
-              <PinIcon /> Ved til hytta
+              <PinIcon /> Fossum Vestre Gård, Gjøvik
             </li>
           </ul>
         </div>
@@ -94,21 +94,6 @@ export function Footer() {
             Vi er en lokal produsent som er opptatt av kvalitet, pålitelighet og
             fornøyde hytteeiere.
           </p>
-        </div>
-
-        <div>
-          <h3 className="mb-3 text-sm font-semibold tracking-wide text-white uppercase">
-            Følg oss
-          </h3>
-          <p className="mb-3 text-sm text-forest-200">
-            Hold deg oppdatert på ved, levering og gode tilbud.
-          </p>
-          <Link
-            to="/kontakt"
-            className="inline-flex text-forest-100 hover:text-white"
-          >
-            <FacebookIcon />
-          </Link>
         </div>
       </div>
 
