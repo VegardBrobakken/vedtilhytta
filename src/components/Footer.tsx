@@ -83,7 +83,7 @@ export function Footer() {
 
       <div className="border-t border-forest-800">
         <div className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-forest-300 sm:px-6">
-          © {new Date().getFullYear()} vedtilhytta.no
+          © {new Date().getFullYear()} vedtilhytta.no | 931 462 385
         </div>
       </div>
     </footer>
