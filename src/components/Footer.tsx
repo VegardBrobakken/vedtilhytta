@@ -49,8 +49,9 @@ export function Footer() {
             <PinIcon /> Leveringsområder
           </h3>
           <p className="text-sm text-forest-200">
-            Vi leverer til Gjøvik, Lillehammer, Hamar, Ringsaker, lygna,
-            Lygnasæter, Toten, Søndre land, Nordre land og omegn
+            Vi leverer til Sjusjøen, Hafjell, Skeikampen, Synnfjellet, Gjøvik,
+            Lillehammer, Hamar, Ringsaker, lygna, Lygnasæter, Toten, Søndre
+            land, Nordre land og omegn.
           </p>
         </div>
 

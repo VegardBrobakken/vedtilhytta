@@ -38,7 +38,7 @@ const features = [
   },
   {
     label: "Levering til hytta eller hjemmet",
-    text: "Vi leverer til Gjøvik, Lillehammer, Hamar, Ringsaker, lygna, Lygnasæter, Toten, Søndre land, Nordre land og omegn",
+    text: "Vi leverer til Sjusjøen, Hafjell, Skeikampen, Synnfjellet, Gjøvik, Lillehammer, Hamar, Ringsaker, lygna, Lygnasæter, Toten, Søndre land, Nordre land og omegn.",
     // Delivery truck
     icon: (
       <>
