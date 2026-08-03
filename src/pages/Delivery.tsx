@@ -16,6 +16,10 @@ export function Delivery() {
             leveranser – slik at du kan være trygg på at veden kommer når du
             trenger den.
           </p>
+          <p>
+            Vi leverer til Gjøvik, Lillehammer, Hamar, Ringsaker, lygna,
+            Lygnasæter, Toten, Søndre land, Nordre land og omegn.
+          </p>
         </div>
       </div>
       <img

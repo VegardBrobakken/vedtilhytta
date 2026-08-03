@@ -3,21 +3,6 @@ import { useAuth } from "../auth/AuthContext";
 import { Link } from "../components/Link";
 import { useRouter } from "../router/RouterContext";
 
-function TreeIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="32"
-      height="32"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
-    </svg>
-  );
-}
-
 const labelClass =
   "block text-sm font-medium text-gray-700";
 const inputClass =
@@ -48,14 +33,15 @@ export function Login() {
   return (
     <div className="flex flex-col items-center py-10">
       <Link to="/" className="mb-6 flex flex-col items-center gap-2">
-        <TreeIcon className="text-forest-700" />
-        <span className="flex flex-col items-center leading-tight">
-          <span className="text-lg font-bold text-forest-800">
-            vedtilhytta.no
-          </span>
-          <span className="text-[11px] tracking-wide text-gray-500 uppercase">
-            Administrasjon
-          </span>
+        <img
+          src="/img/logo.png"
+          alt="vedtilhytta.no – god ved, godt hytteliv"
+          width={497}
+          height={120}
+          className="h-12 w-auto"
+        />
+        <span className="text-[11px] tracking-wide text-gray-500 uppercase">
+          Administrasjon
         </span>
       </Link>
 

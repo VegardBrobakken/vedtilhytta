@@ -37,8 +37,8 @@ const features = [
     ),
   },
   {
-    label: "Levering til hytta",
-    text: "Vi leverer til Hafjell, Sjusjøen, Skeikampen og omegn.",
+    label: "Levering til hytta eller hjemmet",
+    text: "Vi leverer til Gjøvik, Lillehammer, Hamar, Ringsaker, lygna, Lygnasæter, Toten, Søndre land, Nordre land og omegn",
     // Delivery truck
     icon: (
       <>
@@ -109,10 +109,6 @@ export function Home() {
             </p>
             <p className="mt-2 text-forest-100">
               Kortreist ved fra bærekraftig lokalt skogbruk.
-            </p>
-            <p className="mt-4 text-forest-100">
-              Vi leverer til Hafjell, Sjusjøen, Synnfjellet, Skeikampen og
-              omegn.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

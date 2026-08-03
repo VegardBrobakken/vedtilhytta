@@ -8,21 +8,6 @@ const navLinks = [
   { to: "/levering", label: "Levering" },
 ];
 
-function TreeIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
-    </svg>
-  );
-}
-
 export function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -30,16 +15,14 @@ export function Navbar() {
     <nav className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between p-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <TreeIcon className="text-forest-700" />
-          <span className="flex flex-col leading-tight">
-            <span className="text-lg font-bold text-forest-800">
-              vedtilhytta.no
-            </span>
-            <span className="text-[11px] text-gray-500">
-              god ved godt hytteliv
-            </span>
-          </span>
+        <Link to="/" className="flex items-center">
+          <img
+            src="/img/logo.png"
+            alt="vedtilhytta.no – god ved, godt hytteliv"
+            width={497}
+            height={120}
+            className="h-10 w-auto sm:h-12"
+          />
         </Link>
 
         {/* Desktop links */}

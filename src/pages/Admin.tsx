@@ -21,21 +21,6 @@ import {
 import type { ItemForSaleDoc } from "../types/ItemForSale";
 import type { PriceSectionDoc } from "../types/PriceSection";
 
-function TreeIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M12 2 6 10h2.5L4 16h4.5L4 22h7v-3h2v3h7l-4.5-6H20l-4.5-6H18z" />
-    </svg>
-  );
-}
-
 function TabButton({
   active,
   onClick,
@@ -268,15 +253,16 @@ export function Admin() {
       {/* Brand bar – echoes the public navbar so it reads as the same site */}
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 p-4">
-          <Link to="/" className="flex items-center gap-2">
-            <TreeIcon className="text-forest-700" />
-            <span className="flex flex-col leading-tight">
-              <span className="text-lg font-bold text-forest-800">
-                vedtilhytta.no
-              </span>
-              <span className="text-[11px] tracking-wide text-gray-500 uppercase">
-                Administrasjon
-              </span>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/img/logo.png"
+              alt="vedtilhytta.no – god ved, godt hytteliv"
+              width={497}
+              height={120}
+              className="h-10 w-auto sm:h-12"
+            />
+            <span className="border-l border-gray-300 pl-3 text-[11px] tracking-wide text-gray-500 uppercase">
+              Administrasjon
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-3 text-sm">
