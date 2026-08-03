@@ -152,7 +152,7 @@ export function Order() {
               onChange={(e) => setProducts(e.target.value)}
               required
               rows={4}
-              placeholder="F.eks. 2stk 1000L bjørkeved, 1stk 80L blandingsved"
+              placeholder="F.eks. 2stk 1000L bjørkeved og 1stk 60L bjørkeved"
               className={inputClass}
             />
           </label>
