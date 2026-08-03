@@ -218,7 +218,7 @@ export function Home() {
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
+                  className="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
                 >
                   {product.imageUrl ? (
                     <img
@@ -229,14 +229,14 @@ export function Home() {
                   ) : (
                     <ImagePlaceholder className="aspect-[4/3] w-full" />
                   )}
-                  <div className="p-5">
+                  <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold text-gray-900">
                       {product.name}
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
                       {product.description}
                     </p>
-                    <div className="mt-4 flex items-center justify-between">
+                    <div className="mt-auto flex items-center justify-between pt-4">
                       <span className="text-xl font-bold text-forest-800">
                         {formatPrice(product.price)}
                       </span>
