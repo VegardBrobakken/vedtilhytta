@@ -14,6 +14,13 @@
   --color-forest-950: #122518;
 }
 
+html {
+  /* Always reserve the scrollbar gutter, so a page that is briefly shorter
+     than the viewport (e.g. /priser while loading) does not re-centre the
+     layout when its scrollbar appears. */
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
 }
