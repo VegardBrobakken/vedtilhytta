@@ -1,9 +1,19 @@
 RewriteEngine On
 RewriteBase /
 
-# Serve existing files and directories as-is
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
+# One canonical host: www.vedtilhytta.no -> vedtilhytta.no. Without this both
+# hosts answer 200 for every URL and search engines index the site twice.
+# Matching on the "www." prefix rather than on the expected host means that if
+# the upstream proxy ever rewrites Host, the rule simply stops firing instead
+# of redirecting to itself forever.
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# Serve existing files as-is.
+# Directories are deliberately not matched here: passing them through hands the
+# request to mod_dir, which serves a public listing for any folder without an
+# index file (/img/ was browsable). They now fall through to the SPA instead.
+RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
 # Otherwise, route everything to index.html (SPA fallback)
