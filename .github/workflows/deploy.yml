@@ -61,6 +61,8 @@ jobs:
             cls -la;
             echo '--- Mirroring dist/ -> remote (uploading):';
             mirror -R --verbose --no-perms ./dist/ ./;
+            echo '--- Pruning stale hashed assets from previous builds:';
+            mirror -R --verbose --no-perms --delete ./dist/assets/ ./assets/;
             echo '--- Remote listing AFTER upload:';
             cls -la;
           "
