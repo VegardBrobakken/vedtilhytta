@@ -18,7 +18,7 @@ export function Delivery() {
           </p>
           <p>
             Vi leverer til Sjusjøen, Hafjell, Skeikampen, Synnfjellet, Gjøvik,
-            Lillehammer, Hamar, Ringsaker, lygna, Lygnasæter, Toten, Søndre
+            Lillehammer, Hamar, Ringsaker, Lygna, Lygnasæter, Toten, Søndre
             land, Nordre land og omegn.
           </p>
         </div>
