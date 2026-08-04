@@ -11,6 +11,8 @@ export function Order() {
   const [phone, setPhone] = useState("");
   const [wantsDelivery, setWantsDelivery] = useState(false);
   const [address, setAddress] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState("");
+  const [driverInstructions, setDriverInstructions] = useState("");
   const [products, setProducts] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [busy, setBusy] = useState(false);
@@ -33,6 +35,8 @@ export function Order() {
         email,
         phone,
         address: wantsDelivery ? address : "",
+        deliveryTime: wantsDelivery ? deliveryTime : "",
+        driverInstructions: wantsDelivery ? driverInstructions : "",
         products,
       };
       // Reserve the order number and store the order first, then email it. The
@@ -130,18 +134,44 @@ export function Order() {
         </div>
 
         {wantsDelivery && (
-          <div>
-            <label className={labelClass}>
-              Leveringsadresse<span className="text-red-600">*</span>
-              <textarea
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-                autoComplete="street-address"
-                className={inputClass}
-              />
-            </label>
-          </div>
+          <>
+            <div>
+              <label className={labelClass}>
+                Leveringsadresse<span className="text-red-600">*</span>
+                <textarea
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                  autoComplete="street-address"
+                  className={inputClass}
+                />
+              </label>
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Ønsket leveringstidspunkt<span className="text-red-600">*</span>
+                <input
+                  value={deliveryTime}
+                  onChange={(e) => setDeliveryTime(e.target.value)}
+                  required
+                  className={inputClass}
+                />
+              </label>
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Instrukser til sjåfør
+                <textarea
+                  value={driverInstructions}
+                  onChange={(e) => setDriverInstructions(e.target.value)}
+                  rows={3}
+                  className={inputClass}
+                />
+              </label>
+            </div>
+          </>
         )}
 
         <div>

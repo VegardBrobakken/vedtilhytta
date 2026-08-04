@@ -36,11 +36,13 @@ service cloud.firestore {
 
   function isValidOrder() {
     let d = request.resource.data;
-    return d.keys().hasOnly(['name', 'email', 'phone', 'address', 'products', 'status', 'createdAt', 'orderNumber'])
+    return d.keys().hasOnly(['name', 'email', 'phone', 'address', 'deliveryTime', 'driverInstructions', 'products', 'status', 'createdAt', 'orderNumber'])
       && d.name is string     && d.name.size() > 0     && d.name.size() < 200
       && d.email is string    && d.email.size() > 0     && d.email.size() < 200
       && d.phone is string    && d.phone.size() > 0     && d.phone.size() < 100
       && d.address is string  && d.address.size() < 1000
+      && d.deliveryTime is string && d.deliveryTime.size() < 500
+      && d.driverInstructions is string && d.driverInstructions.size() < 1000
       && d.products is string && d.products.size() > 0  && d.products.size() < 4000
       && d.orderNumber is int && d.orderNumber >= 1000
       && d.status == 'new'

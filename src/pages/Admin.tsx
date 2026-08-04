@@ -17,6 +17,7 @@ import {
   setOrderStatus,
   type OrderCursor,
   type OrderDoc,
+  type OrderStatus,
 } from "../lib/orders";
 import type { ItemForSaleDoc } from "../types/ItemForSale";
 import type { PriceSectionDoc } from "../types/PriceSection";
@@ -45,17 +46,49 @@ function TabButton({
   );
 }
 
+/**
+ * The order states in the order they progress through, with their Norwegian
+ * label and colours. Class names are spelled out in full because Tailwind only
+ * keeps classes it can find as literal strings in the source.
+ */
+const STATUSES = [
+  {
+    value: "new",
+    label: "Ny",
+    badge: "bg-yellow-100 text-yellow-800",
+    active: "border-yellow-300 bg-yellow-100 text-yellow-800",
+  },
+  {
+    value: "handled",
+    label: "Behandlet",
+    badge: "bg-blue-100 text-blue-800",
+    active: "border-blue-300 bg-blue-100 text-blue-800",
+  },
+  {
+    value: "delivered",
+    label: "Levert",
+    badge: "bg-green-100 text-green-800",
+    active: "border-green-300 bg-green-100 text-green-800",
+  },
+] as const satisfies readonly {
+  value: OrderStatus;
+  label: string;
+  badge: string;
+  active: string;
+}[];
+
 function OrderCard({
   order,
-  onToggle,
+  onSetStatus,
   onRemove,
 }: {
   order: OrderDoc;
-  onToggle: (order: OrderDoc) => void;
+  onSetStatus: (order: OrderDoc, status: OrderStatus) => void;
   onRemove: (order: OrderDoc) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const handled = order.status === "handled";
+  // Fall back to "Ny" so an order with an unrecognised status still renders.
+  const current = STATUSES.find((s) => s.value === order.status) ?? STATUSES[0];
   const created = order.createdAt?.toDate().toLocaleString("nb-NO");
 
   return (
@@ -93,13 +126,9 @@ function OrderCard({
           )}
         </span>
         <span
-          className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold ${
-            handled
-              ? "bg-green-100 text-green-800"
-              : "bg-blue-200 text-blue-800"
-          }`}
+          className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold ${current.badge}`}
         >
-          {handled ? "Behandlet" : "Ny"}
+          {current.label}
         </span>
       </button>
 
@@ -132,24 +161,53 @@ function OrderCard({
                 </dd>
               </>
             )}
+            {order.deliveryTime && (
+              <>
+                <dt className="text-gray-500">Leveringstidspunkt</dt>
+                <dd className="whitespace-pre-wrap text-gray-800">
+                  {order.deliveryTime}
+                </dd>
+              </>
+            )}
+            {order.driverInstructions && (
+              <>
+                <dt className="text-gray-500">Til sjåfør</dt>
+                <dd className="whitespace-pre-wrap text-gray-800">
+                  {order.driverInstructions}
+                </dd>
+              </>
+            )}
             <dt className="text-gray-500">Produkter</dt>
             <dd className="whitespace-pre-wrap text-gray-800">
               {order.products}
             </dd>
           </dl>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => onToggle(order)}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium hover:bg-gray-100"
-            >
-              {handled ? "Marker som ny" : "Marker som behandlet"}
-            </button>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div role="group" aria-label="Status" className="flex flex-wrap gap-2">
+              {STATUSES.map((status) => {
+                const isCurrent = status.value === current.value;
+                return (
+                  <button
+                    key={status.value}
+                    type="button"
+                    aria-pressed={isCurrent}
+                    onClick={() => onSetStatus(order, status.value)}
+                    className={`rounded-md border px-3 py-1.5 text-sm font-medium ${
+                      isCurrent
+                        ? status.active
+                        : "border-gray-300 hover:bg-gray-100"
+                    }`}
+                  >
+                    {status.label}
+                  </button>
+                );
+              })}
+            </div>
             <button
               type="button"
               onClick={() => onRemove(order)}
-              className="rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
+              className="ml-auto rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
             >
               Slett
             </button>
@@ -219,13 +277,15 @@ export function Admin() {
     }
   };
 
-  const onToggleOrder = async (order: OrderDoc) => {
-    const next = order.status === "new" ? "handled" : "new";
+  const onSetOrderStatus = async (order: OrderDoc, next: OrderStatus) => {
+    if (next === order.status) return;
     await setOrderStatus(order.id, next);
     setOrders((prev) =>
       prev.map((o) => (o.id === order.id ? { ...o, status: next } : o)),
     );
-    setNewOrders((n) => n + (next === "new" ? 1 : -1));
+    setNewOrders(
+      (n) => n + (next === "new" ? 1 : 0) - (order.status === "new" ? 1 : 0),
+    );
   };
 
   const onRemoveOrder = async (order: OrderDoc) => {
@@ -452,7 +512,7 @@ export function Admin() {
                 <OrderCard
                   key={order.id}
                   order={order}
-                  onToggle={onToggleOrder}
+                  onSetStatus={onSetOrderStatus}
                   onRemove={onRemoveOrder}
                 />
               ))}

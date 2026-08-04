@@ -18,17 +18,23 @@ import {
 } from 'firebase/firestore'
 import { db } from './firebase'
 
-/** The details a customer fills in on the order form. */
+/**
+ * The details a customer fills in on the order form. The delivery fields are
+ * empty strings unless the customer asked to have the wood delivered;
+ * `driverInstructions` is optional even then.
+ */
 export interface OrderDetails {
   name: string
   email: string
   phone: string
   address: string
+  deliveryTime: string
+  driverInstructions: string
   products: string
 }
 
-/** Whether the owner has dealt with an order yet. */
-export type OrderStatus = 'new' | 'handled'
+/** How far along an order is: newly received, processed, or delivered. */
+export type OrderStatus = 'new' | 'handled' | 'delivered'
 
 /** An order as stored in Firestore, together with its document id. */
 export interface OrderDoc extends OrderDetails {
@@ -91,6 +97,8 @@ export async function submitOrder(order: OrderDetails, orderNumber: number) {
       'E-post': order.email,
       Telefon: order.phone,
       Leveringsadresse: order.address,
+      'Ønsket leveringstidspunkt': order.deliveryTime,
+      'Instrukser til sjåfør': order.driverInstructions,
       'Ønskede produkter': order.products,
     }),
   })
