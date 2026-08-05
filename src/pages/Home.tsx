@@ -98,7 +98,7 @@ export function Home() {
       {/* Hero */}
       <section className="relative isolate overflow-hidden">
         <ImagePlaceholder className="absolute inset-0 h-full w-full" />
-        <div className="absolute inset-0 bg-gradient-to-r from-forest-950/90 via-forest-950/70 to-forest-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-forest-950/95 via-forest-900/95 to-forest-800/90" />
         <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:py-32">
           <div className="max-w-xl text-white">
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
