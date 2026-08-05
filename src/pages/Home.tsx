@@ -102,7 +102,7 @@ export function Home() {
         <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:py-32">
           <div className="max-w-xl text-white">
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
-              Ved til hytta – enkelt og trygt
+              Ved til hytta – trygt og enkelt
             </h1>
             <p className="mt-4 text-lg text-forest-100">
               Tørr ved, klar til bruk
