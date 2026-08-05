@@ -40,10 +40,26 @@ function MailIcon() {
   );
 }
 
+function FacebookIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12Z" />
+    </svg>
+  );
+}
+
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61592503604326";
+
 export function Footer() {
   return (
     <footer className="bg-forest-900 text-forest-100">
-      <div className="mx-auto grid max-w-4xl gap-12 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-12 sm:grid-cols-2 sm:px-6 md:grid-cols-4">
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold tracking-wide text-white uppercase">
             <PinIcon /> Leveringsområder
@@ -80,6 +96,21 @@ export function Footer() {
             Vi er en lokal produsent som er opptatt av kvalitet, pålitelighet og
             fornøyde hytteeiere.
           </p>
+        </div>
+
+        <div>
+          <h3 className="mb-3 text-sm font-semibold tracking-wide text-white uppercase">
+            Følg oss
+          </h3>
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Følg oss på Facebook"
+            className="inline-flex items-center gap-2 text-sm text-forest-200 transition-colors hover:text-white"
+          >
+            <FacebookIcon />
+          </a>
         </div>
       </div>
 
