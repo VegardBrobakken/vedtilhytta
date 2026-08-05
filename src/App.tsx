@@ -7,6 +7,7 @@ import { Products } from "./pages/Products";
 import { Prices } from "./pages/Prices";
 import { Delivery } from "./pages/Delivery";
 import { Order } from "./pages/Order";
+import { Privacy } from "./pages/Privacy";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/Login";
 import { NotFound } from "./pages/NotFound";
@@ -17,6 +18,7 @@ const publicPages: Record<string, React.ComponentType> = {
   "/priser": Prices,
   "/levering": Delivery,
   "/bestill": Order,
+  "/personvern": Privacy,
 };
 
 function App() {
